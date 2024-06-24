@@ -14,8 +14,10 @@ interface IProps {
   loading: boolean;
 }
 
-const Home:React.FC<IProps> = ({ users, loading }) => {
-  const chartLabels = users.map((item) => `${item.first_name} ${item.last_name}`);
+const Home: React.FC<IProps> = ({ users, loading }) => {
+  const chartLabels = users.map(
+    (item) => `${item.first_name} ${item.last_name}`
+  );
   const chartData = users.map((item) => item.participation);
 
   return (
@@ -25,11 +27,14 @@ const Home:React.FC<IProps> = ({ users, loading }) => {
         <Subtitle>
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </Subtitle>
-        {loading ? <Loading /> : null}
-        <DivRow>
-          <TableDeftault columns={col} data={users} />
-          <DoughnutChart data={chartData} labels={chartLabels} />
-        </DivRow>
+        {loading ? (
+          <Loading />
+        ) : (
+          <DivRow>
+            <TableDeftault columns={col} data={users} />
+            <DoughnutChart data={chartData} labels={chartLabels} />
+          </DivRow>
+        )}
       </Content>
     </Container>
   );

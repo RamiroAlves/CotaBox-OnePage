@@ -5,6 +5,14 @@ export const Table = styled.table`
     margin-bottom: 1rem;
     vertical-align: top;
     width: 50%;
+
+    @media (max-width: 600px) {
+        width: 70%;
+    }
+
+    @media (max-width: 500px) {
+        width: 90%;
+    }
 `;
 
 export const TableHeade = styled.thead`

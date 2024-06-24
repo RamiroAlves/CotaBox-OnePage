@@ -23,6 +23,11 @@ export const Subtitle = styled.p`
   font-size: 18px;
   font-weight: 400;
   margin-top: 0;
+
+  @media (max-width: 446px) {
+    text-align: center;
+    width: 90%;
+  }
 `;
 
 export const DivRow = styled.div`
@@ -30,6 +35,11 @@ export const DivRow = styled.div`
   justify-content: space-around;
   margin-top: 30px;
   width: 100%;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const Loading = styled.span`
