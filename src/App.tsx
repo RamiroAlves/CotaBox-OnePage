@@ -8,7 +8,7 @@ import {Toaster} from 'react-hot-toast';
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_USER, GET_USERS } from "./services/dashboard";
 
-interface IPayload {
+export interface IPayload {
   first_name: string;
   last_name: string;
   participation: number;
@@ -75,7 +75,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <Header handleChange={handlePayload} submit={onSubmit} />
+      <Header handleChange={handlePayload} submit={onSubmit} payload={payload} />
       <Home users={users} loading={loading} />
       <Toaster />
     </ThemeProvider>
