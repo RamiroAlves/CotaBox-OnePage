@@ -27,7 +27,8 @@ const Header:React.FC<IProps> = ({ handleChange, submit, payload }) => {
             <InputDefault 
                 name="participation"
                 placeholder="Participation"
-                value={payload.participation}
+                min={1}
+                value={payload?.participation || ""}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChange("participation", +event.target.value)}
             />
             <Button onClick={() => submit()}>SEND</Button>

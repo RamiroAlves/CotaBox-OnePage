@@ -1,5 +1,5 @@
 import DoughnutChart from "../../components/DoughnutChart/DoughnutChart";
-import TableDeftault, { IColumn, IData } from "../../components/Table/Table";
+import TableDefault, { IColumn, IData } from "../../components/Table/Table";
 import { Container, Content, DivRow, Loading, Subtitle, Title } from "./styles";
 
 const col: IColumn[] = [
@@ -12,9 +12,10 @@ const col: IColumn[] = [
 interface IProps {
   users: IData[];
   loading: boolean;
+  onDelete: (id: string) => void;
 }
 
-const Home: React.FC<IProps> = ({ users, loading }) => {
+const Home: React.FC<IProps> = ({ users, loading, onDelete }) => {
   const chartLabels = users.map(
     (item) => `${item.first_name} ${item.last_name}`
   );
@@ -31,7 +32,7 @@ const Home: React.FC<IProps> = ({ users, loading }) => {
           <Loading />
         ) : (
           <DivRow>
-            <TableDeftault columns={col} data={users} />
+            <TableDefault columns={col} data={users} onDelete={onDelete} />
             <DoughnutChart data={chartData} labels={chartLabels} />
           </DivRow>
         )}

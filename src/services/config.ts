@@ -6,7 +6,8 @@ let url = ''
 if (currentUrl.includes('vercel.app')) {
   url = 'https://cotabox-api-nx1r.onrender.com/graphql'
 } else {
-  url = 'http://localhost:3010/graphql'
+  url = 'https://cotabox-api-nx1r.onrender.com/graphql'
+  // url = 'http://localhost:3010/graphql'
 }
 
 const client = new ApolloClient({

@@ -6,22 +6,23 @@ import Home from "./pages/Home/Home";
 import Toast from "./components/Toast/Toast";
 import {Toaster} from 'react-hot-toast';
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_USER, GET_USERS } from "./services/dashboard";
+import { ADD_USER, DELETE_USER, GET_USERS } from "./services/dashboard";
 
 export interface IPayload {
   first_name: string;
   last_name: string;
-  participation: number;
+  participation?: number | null;
 }
 
 function App() {
   const { loading, data, refetch } = useQuery(GET_USERS);
   const [addUser] = useMutation(ADD_USER);
+  const [deleteUser] = useMutation(DELETE_USER);
   const [users, setUsers] = useState<IData[]>([]);
   const [payload, setPayload] = useState<IPayload>({
     first_name: "",
     last_name: "",
-    participation: 0,
+    participation: null,
   });
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function App() {
             participation: Number(payload.participation),
           },
         });
-        setPayload({ first_name: "", last_name: "", participation: 0 });
+        setPayload({ first_name: "", last_name: "", participation: null });
         await refetch();
       } catch (error) {
         console.error("Error adding user:", error);
@@ -47,7 +48,7 @@ function App() {
   };
 
   const validate = () => {
-    const totalParticipation = users.reduce((acc, user) => acc + user.participation, 0) + payload.participation;
+    const totalParticipation = users.reduce((acc, user) => acc + (user.participation || 0), 0) + (payload.participation || 0);
 
     if (!payload?.first_name) {
       Toast.show("O campo First Name é obrigatório", "error");
@@ -57,7 +58,7 @@ function App() {
       Toast.show("O campo Last Name é obrigatório", "error");
       return false;
     }
-    if (payload?.participation === 0) {
+    if (payload?.participation == null || !payload?.participation) {
       Toast.show("O campo Participation é obrigatório", "error");
       return false;
     }
@@ -72,11 +73,20 @@ function App() {
     setPayload({ ...payload, [label]: value });
   };
 
+  const onDelete = async (id: string) => {
+    try {
+      await deleteUser({ variables: { id } });
+      await refetch();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Header handleChange={handlePayload} submit={onSubmit} payload={payload} />
-      <Home users={users} loading={loading} />
+      <Home users={users} loading={loading} onDelete={onDelete} />
       <Toaster />
     </ThemeProvider>
   );

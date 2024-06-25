@@ -26,3 +26,13 @@ export const ADD_USER = gql`
   }
 `;
 
+export const DELETE_USER = gql`
+  mutation DeleteUser($id: String!) {
+    removeUser(id: $id) {
+      id
+      first_name
+      last_name
+      participation
+    }
+  }
+`;
